@@ -6,7 +6,9 @@ import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 import ticketRoutes from './routes/ticketRoutes.js';
 
 const app = express();
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173' }));
+// Browsers send origins without a trailing slash, so normalize the deployment URL before CORS compares it.
+const clientUrl = (process.env.CLIENT_URL || 'http://localhost:5173').replace(/\/$/, '');
+app.use(cors({ origin: clientUrl }));
 app.use(express.json());
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 app.use('/api/tickets', ticketRoutes);
