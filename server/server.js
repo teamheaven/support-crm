@@ -4,6 +4,8 @@ import express from 'express';
 import { connectDatabase } from './config/db.js';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 import ticketRoutes from './routes/ticketRoutes.js';
+import { setServers } from "node:dns/promises";
+setServers(["1.1.1.1", "8.8.8.8"]);
 
 const app = express();
 // Browsers send origins without a trailing slash, so normalize the deployment URL before CORS compares it.
